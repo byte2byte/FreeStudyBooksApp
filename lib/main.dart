@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:free_study_books_app/Screens/BookDetailsScreen.dart';
 import 'package:free_study_books_app/Screens/OTPScreen.dart';
 import 'package:free_study_books_app/Screens/PostYourBook.dart';
 import 'package:get/route_manager.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       return const GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'FreeStudyBooksApp',
-        home: PostYourBookScreen(),
+        home: BookDetailScreen(),
       );
     });
   }

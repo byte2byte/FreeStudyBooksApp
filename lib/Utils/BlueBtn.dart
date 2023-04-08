@@ -15,7 +15,7 @@ class BlueBtn extends StatelessWidget {
         ontap();
       },
       child: SizedBox(
-        height: 10.0.h,
+        height: 5.0.h,
         width: 100.0.w,
         child: Stack(
           children: [

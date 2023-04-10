@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:free_study_books_app/Screens/BookDetailsScreen.dart';
+import 'package:free_study_books_app/Screens/FIndBookScreen.dart';
 import 'package:free_study_books_app/Screens/OTPScreen.dart';
 import 'package:free_study_books_app/Screens/PostYourBook.dart';
 import 'package:get/route_manager.dart';
@@ -13,10 +14,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveSizer(builder: (context, orientation, screenType) {
-      return const GetMaterialApp(
+      return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'FreeStudyBooksApp',
-        home: BookDetailScreen(),
+        home: FindBookScreen(),
+        routes: {
+          BookDetailScreen.routeName: (context) => BookDetailScreen(),
+        },
       );
     });
   }

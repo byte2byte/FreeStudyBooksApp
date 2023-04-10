@@ -3,7 +3,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class BookDetailScreen extends StatefulWidget {
-  const BookDetailScreen({super.key});
+  static const routeName = '/book-detail-screen';
 
   @override
   State<BookDetailScreen> createState() => _BookDetailScreenState();
@@ -43,15 +43,12 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                     child: CarouselSlider(
                       options: CarouselOptions(),
                       items: imgList
-                          .map((item) => Image.network(item,
-                              fit: BoxFit.cover, width: 1000))
+                          .map(
+                            (item) => Image.network(item,
+                                fit: BoxFit.fill, width: 1000),
+                          )
                           .toList(),
                     ),
-
-                    // Image.network(
-                    //   fit: BoxFit.cover,
-                    //   'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
-                    // ),
                     footer: GridTileBar(
                       backgroundColor: Colors.white,
                       leading: Text(

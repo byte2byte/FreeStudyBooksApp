@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "603050544970",
+    "project_id": "studybook-be7c5",
+    "storage_bucket": "studybook-be7c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603050544970:android:e9740305b61aef67453bb3",
+        "android_client_info": {
+          "package_name": "com.example.free_study_books_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603050544970-avckapiedt327k333q4phsaf45bc74ju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBEIJSpkeGw7iYyxYtN6jgVlwNN46FgPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603050544970-avckapiedt327k333q4phsaf45bc74ju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

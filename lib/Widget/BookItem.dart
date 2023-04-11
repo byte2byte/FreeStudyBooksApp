@@ -13,47 +13,50 @@ class BookItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(12))),
+          borderRadius: BorderRadius.all(Radius.circular(3.w))),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Stack(
           children: [
             GridTile(
               child: Image.network(url, fit: BoxFit.fill),
-              footer: GridTileBar(
-                backgroundColor: Colors.white,
-                leading: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 5.w,
-                        fontWeight: FontWeight.w600,
+              footer: Container(
+                height: 6.5.h,
+                child: GridTileBar(
+                  backgroundColor: Colors.white,
+                  leading: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 5.w,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
                       ),
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
-                    ),
-                    Text(
-                      author,
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 3.w,
+                      Text(
+                        author,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 3.w,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '\$${cost}',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 4.w,
-                        fontWeight: FontWeight.w600,
+                      Text(
+                        '\$${cost}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 4.w,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  // trailing: Text('djgdjg'),
                 ),
-                // trailing: Text('djgdjg'),
               ),
             ),
             Positioned(

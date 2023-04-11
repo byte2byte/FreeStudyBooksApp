@@ -5,7 +5,7 @@ import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class FindBookScreen extends StatefulWidget {
-  const FindBookScreen({super.key});
+  static const routeName = '/find-book-screen';
 
   @override
   State<FindBookScreen> createState() => _FindBookScreenState();
@@ -46,9 +46,14 @@ class _FindBookScreenState extends State<FindBookScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: TextField(
+                        child: TextFormField(
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(7)),
+                            contentPadding: EdgeInsets.all(7),
+                            // border: new OutlineInputBorder(
+                            // borderRadius:
+                            //     const BorderRadius.all(Radius.zero),
+                            // borderSide: BorderSide()),
+                          ),
                         ),
                       ),
                       Icon(

@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:free_study_books_app/Screens/ChatScreen/chatScreen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -10,6 +13,33 @@ class BookDetailScreen extends StatefulWidget {
 }
 
 class _BookDetailScreenState extends State<BookDetailScreen> {
+  var Author = '';
+  var Publisher = '';
+  int NumberOfPages = 1;
+  var NameOfBook = '';
+  var userId = '';
+  int Price = 1;
+  bool check = false;
+  @override
+  void didChangeDependencies() {
+    if (check == false) {
+      final routeArgs =
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+      if (routeArgs != null) {
+        Author = routeArgs['Author'] as String;
+        Publisher = routeArgs['Publisher'] as String;
+        NumberOfPages = routeArgs['NumberOfPages'];
+        NameOfBook = routeArgs['NameOfBook'] as String;
+        userId = routeArgs['userId'] as String;
+        Price = routeArgs['Price'];
+      }
+
+      check = true;
+    }
+
+    super.didChangeDependencies();
+  }
+
   final List<String> imgList = [
     'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
     'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
@@ -26,7 +56,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Title of Book'),
+            title: Text(NameOfBook),
           ),
           body: Column(
             children: [
@@ -52,13 +82,13 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                     footer: GridTileBar(
                       backgroundColor: Colors.white,
                       leading: Text(
-                        'Physics',
+                        '$NameOfBook',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18.sp),
                       ),
                       title: Text(''),
                       trailing: Text(
-                        '\$28.8',
+                        '\$${Price}',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18.sp),
                       ),
@@ -108,7 +138,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Author'),
-                            Text('Tony Stark'),
+                            Text(Author),
                           ],
                         ),
                         SizedBox(
@@ -118,7 +148,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Publisher'),
-                            Text('Edith'),
+                            Text(Publisher),
                           ],
                         ),
                         SizedBox(
@@ -158,7 +188,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Number of pages'),
-                            Text('500'),
+                            Text('${NumberOfPages}'),
                           ],
                         ),
                       ],
@@ -188,7 +218,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                           //       'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg'),
                           // ),
                           title: Text(
-                            'John wick',
+                            Publisher,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           subtitle: Row(children: [
@@ -259,7 +289,12 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                         elevation: 10,
                         backgroundColor: Color.fromARGB(255, 126, 44, 233),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(ChatScreen.routeName, arguments: {
+                          'userId': userId,
+                        });
+                      },
                       child: const Text(
                         'Buy Now',
                         style: TextStyle(

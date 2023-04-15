@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:free_study_books_app/Screens/Authentication/UserDetailScreen.dart';
+import 'package:free_study_books_app/Screens/ChatScreen/chatScreen.dart';
+import 'package:free_study_books_app/Screens/postYourBookScreen/postBookDetailScreen.dart';
+import 'package:free_study_books_app/Screens/postYourBookScreen/postBookInfoScreen.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,7 +12,7 @@ import 'package:free_study_books_app/Screens/Authentication/OtpScreen.dart';
 import 'package:free_study_books_app/Screens/BookDetailsScreen.dart';
 import 'package:free_study_books_app/Screens/FIndBookScreen.dart';
 import 'package:free_study_books_app/Screens/Authentication/phoneVerificationScreen.dart';
-import 'package:free_study_books_app/Screens/PostYourBook.dart';
+import 'package:free_study_books_app/Screens/postYourBookScreen/PostBookPhtosScreen.dart.dart';
 import './Utils/global.dart';
 
 void main() async {
@@ -39,6 +42,10 @@ class MyApp extends StatelessWidget {
           FindBookScreen.routeName: (context) => FindBookScreen(),
           OtpScreen.routeName: (context) => OtpScreen(),
           UserDetailScreen.routeName: (context) => UserDetailScreen(),
+          ChatScreen.routeName: (context) => ChatScreen(),
+          PostBookPhotosScreen.routeName: (context) => PostBookPhotosScreen(),
+          PostBookInfoScreen.routeName: (context) => PostBookInfoScreen(),
+          PostBookDetailScreen.routeName: (context) => PostBookDetailScreen(),
         },
       );
     });

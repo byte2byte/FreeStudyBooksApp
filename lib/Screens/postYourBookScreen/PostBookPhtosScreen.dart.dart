@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:free_study_books_app/Screens/postYourBookScreen/postBookInfoScreen.dart';
 import 'package:free_study_books_app/Utils/BlueBtn.dart';
 import 'package:free_study_books_app/Utils/KStyles.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class PostYourBookScreen extends StatefulWidget {
-  const PostYourBookScreen({super.key});
+class PostBookPhotosScreen extends StatefulWidget {
+  static const routeName = '/post-book-photos-screen';
 
   @override
-  State<PostYourBookScreen> createState() => _PostYourBookScreenState();
+  State<PostBookPhotosScreen> createState() => _PostBookPhotosScreenState();
 }
 
-class _PostYourBookScreenState extends State<PostYourBookScreen> {
+class _PostBookPhotosScreenState extends State<PostBookPhotosScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +67,12 @@ class _PostYourBookScreenState extends State<PostYourBookScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue,
                                   borderRadius: BorderRadius.circular(2.0.w)),
+                              child: Center(
+                                  child: Icon(
+                                size: 20.w,
+                                Icons.photo_camera_sharp,
+                                color: Colors.yellow,
+                              )),
                             ),
                           )
                         ],
@@ -98,6 +105,12 @@ class _PostYourBookScreenState extends State<PostYourBookScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue,
                                   borderRadius: BorderRadius.circular(2.0.w)),
+                              child: Center(
+                                  child: Icon(
+                                size: 20.w,
+                                Icons.photo_camera_sharp,
+                                color: Colors.yellow,
+                              )),
                             ),
                           )
                         ],
@@ -134,6 +147,12 @@ class _PostYourBookScreenState extends State<PostYourBookScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue,
                                   borderRadius: BorderRadius.circular(2.0.w)),
+                              child: Center(
+                                  child: Icon(
+                                size: 20.w,
+                                Icons.photo_camera_sharp,
+                                color: Colors.yellow,
+                              )),
                             ),
                           )
                         ],
@@ -166,6 +185,12 @@ class _PostYourBookScreenState extends State<PostYourBookScreen> {
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue,
                                   borderRadius: BorderRadius.circular(2.0.w)),
+                              child: Center(
+                                  child: Icon(
+                                size: 20.w,
+                                Icons.photo_camera_sharp,
+                                color: Colors.yellow,
+                              )),
                             ),
                           )
                         ],
@@ -178,7 +203,11 @@ class _PostYourBookScreenState extends State<PostYourBookScreen> {
             SizedBox(
               height: 10.0.h,
             ),
-            BlueBtn(label: "Next", ontap: () {})
+            BlueBtn(
+                label: "Next",
+                ontap: () {
+                  Navigator.of(context).pushNamed(PostBookInfoScreen.routeName);
+                })
           ],
         ),
       ),

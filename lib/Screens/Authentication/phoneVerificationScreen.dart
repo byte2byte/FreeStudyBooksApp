@@ -12,8 +12,9 @@ class PhoneVerificationScreen extends StatefulWidget {
 
 class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
   Future<void> verifyPhoneNumber(BuildContext context) async {
+    print('+91$phoneNumber');
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
+      phoneNumber: '+91$phoneNumber',
       timeout: const Duration(seconds: 30),
       verificationCompleted: (AuthCredential authCredential) {
         setState(() {

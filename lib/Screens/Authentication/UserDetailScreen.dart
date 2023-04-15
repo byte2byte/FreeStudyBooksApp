@@ -6,6 +6,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../Utils/global.dart';
 import 'package:free_study_books_app/Utils/BlueBtn.dart';
 
+import '../postYourBookScreen/PostBookPhtosScreen.dart.dart';
+
 class UserDetailScreen extends StatefulWidget {
   static const routeName = '/user-detail-screen';
 
@@ -42,7 +44,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       'phoneNumber': phoneNumber,
       'userId': currentFirebaseUser!.uid,
     });
-    Navigator.of(context).pushReplacementNamed(BookDetailScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(PostBookPhotosScreen.routeName);
   }
 
   @override

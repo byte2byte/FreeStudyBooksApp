@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:free_study_books_app/Screens/BookDetailsScreen.dart';
 import 'package:free_study_books_app/Widget/BookItem.dart';
@@ -15,7 +17,16 @@ class _FindBookScreenState extends State<FindBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Search a book')),
+      appBar: AppBar(
+        title: Text('Search a book'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              icon: Icon(Icons.logout))
+        ],
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -89,25 +100,45 @@ class _FindBookScreenState extends State<FindBookScreen> {
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             height: 74.7.h,
             width: 100.w,
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2.5 / 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10),
-              itemCount: 20,
-              itemBuilder: (ctx, index) => GestureDetector(
-                onTap: () =>
-                    Navigator.of(context).pushNamed(BookDetailScreen.routeName),
-                child: BookItem(
-                  url:
-                      'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-                  author: 'Tony Stark',
-                  cost: 28.80,
-                  name: 'Physics Basics',
-                ),
-              ),
-            ),
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('Publishedbooks')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  final documents = snapshot.data!.docs;
+                  print(documents.length);
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 2.5 / 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10),
+                    itemCount: documents.length,
+                    itemBuilder: (ctx, index) => GestureDetector(
+                      onTap: () => Navigator.of(context)
+                          .pushNamed(BookDetailScreen.routeName, arguments: {
+                        'Author': documents[index]['Auhor'],
+                        'Price': documents[index]['Price'],
+                        'NameOfBook': documents[index]['NameOfBook'],
+                        'userId': documents[index]['id'],
+                        'Publisher': documents[index]['Publisher'],
+                        'NumberOfPages': documents[index]['NumberOfpages'],
+                      }),
+                      child: BookItem(
+                        url:
+                            'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+                        author: documents[index]['Auhor'],
+                        cost: documents[index]['Price'],
+                        name: documents[index]['NameOfBook'],
+                      ),
+                    ),
+                  );
+                }),
           ),
         ],
       ),

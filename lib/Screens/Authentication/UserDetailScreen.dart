@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:free_study_books_app/Screens/BookDetailsScreen.dart';
+import 'package:free_study_books_app/Screens/FIndBookScreen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../Utils/global.dart';
 import 'package:free_study_books_app/Utils/BlueBtn.dart';
@@ -44,7 +45,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       'phoneNumber': phoneNumber,
       'userId': currentFirebaseUser!.uid,
     });
-    Navigator.of(context).pushReplacementNamed(PostBookPhotosScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(FindBookScreen.routeName);
   }
 
   @override

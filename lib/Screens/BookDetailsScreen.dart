@@ -293,6 +293,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                         Navigator.of(context)
                             .pushNamed(ChatScreen.routeName, arguments: {
                           'userId': userId,
+                          'Publisher': Publisher,
                         });
                       },
                       child: const Text(

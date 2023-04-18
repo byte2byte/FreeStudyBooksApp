@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:free_study_books_app/Screens/postYourBookScreen/postBookDetailScreen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -53,14 +54,23 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              icon: Icon(Icons.logout))
+        ],
+      ),
       body: Container(
         padding: EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 5.h,
-            ),
+            // SizedBox(
+            //   height: 5.h,
+            // ),
             Text(
               'Sell Your Book',
               style: TextStyle(
@@ -69,7 +79,7 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
               ),
             ),
             Container(
-              height: 89.3.h,
+              height: 83.h,
               child: Form(
                 key: _form,
                 child: SingleChildScrollView(
@@ -247,7 +257,7 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
                         TextFormField(
                           // initialValue: _initValues['title'],
                           decoration: InputDecoration(
-                            labelText: 'What is Consition of Your Book?',
+                            labelText: 'What is Condition of Your Book?',
                             border: new OutlineInputBorder(
                               borderRadius: const BorderRadius.all(
                                 const Radius.circular(10),

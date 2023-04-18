@@ -12,20 +12,33 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   var userId = '';
+  var Publisher = '';
+  bool check = false;
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
-    final routeArgs =
-        ModalRoute.of(context)?.settings.arguments as Map<String, String>;
-    userId = userId;
+    if (check == false) {
+      final routeArgs =
+          ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+      if (routeArgs != null) {
+        userId = routeArgs['userId']!;
+        Publisher = routeArgs['Publisher']!;
+      }
+      check = true;
+    }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('You are chatting with *Author*')),
+      appBar: AppBar(
+          title: Text(
+        softWrap: true,
+        'You are chatting with $Publisher',
+        overflow: TextOverflow.fade,
+      )),
       body: Container(
         child: Column(
           children: [

@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:free_study_books_app/Screens/postYourBookScreen/postBookDetailScreen.dart';
+import 'package:free_study_books_app/Widget/BookItem.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:dropdown_textfield/dropdown_textfield.dart';
 
+import 'package:free_study_books_app/Screens/postYourBookScreen/postBookDetailScreen.dart';
 import 'package:free_study_books_app/Utils/BlueBtn.dart';
+import '../../Models/Book.dart';
 import '../../Utils/global.dart';
 
 class PostBookInfoScreen extends StatefulWidget {
@@ -15,40 +19,65 @@ class PostBookInfoScreen extends StatefulWidget {
 }
 
 class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
-  var nameOfBook = '';
-  var Author = '';
-  var Publisher = '';
-  var levelOfBook = '';
-  var subjectOfBook = '';
-  var NumberOfPages = 1;
-  var ConditionOfBook = '';
-  bool isThereanyMark = false;
-  var Price = 1;
+  var book = Book();
+  bool check = false;
   final _form = GlobalKey<FormState>();
-  var _isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    if (check == false) {
+      final routeArgs =
+          ModalRoute.of(context)?.settings.arguments as Map<String, Book>;
+      book = routeArgs['book']! as Book;
+      check = true;
+    }
+    super.didChangeDependencies();
+  }
+
+  final levelDropDownList = [
+    DropDownValueModel(name: 'primary', value: "primary"),
+    DropDownValueModel(name: 'secondary', value: "secondary"),
+    DropDownValueModel(name: 'graduation', value: "graduation"),
+  ];
+  final subjectDropDownList = [
+    DropDownValueModel(name: 'Physics', value: "Physics"),
+    DropDownValueModel(name: 'Chemistry', value: "Chemistry"),
+    DropDownValueModel(name: 'maths', value: "maths"),
+  ];
+  final conditionDropDownList = [
+    DropDownValueModel(name: 'great', value: "great"),
+    DropDownValueModel(name: 'good', value: "good"),
+    DropDownValueModel(name: 'bad', value: "bad"),
+  ];
+  final markDropDownList = [
+    DropDownValueModel(name: 'yes', value: "yes"),
+    DropDownValueModel(name: 'no', value: "no"),
+  ];
+
   Future<void> _saveForm() async {
     final isValidate = _form.currentState?.validate();
     if (isValidate != null && isValidate == false) {
       return;
     }
     _form.currentState?.save();
-    setState(() {
-      _isLoading = true;
+
+    // print('..............................................');
+    // print(book.NameOfBook);
+    // print('condition${book.ConditionOfBook}');
+    // print(book.LevelofBook);
+    // print(book.NameOfBook);
+    // print(book.NumberOfPages);
+    // print(book.Publisher);
+    // print(book.SubjectofBook);
+    // print(book.description);
+    // print(book.id);
+    // print(book.imageUrl);
+    // print(book.isMark);
+    // print(book.Author);
+
+    Navigator.of(context).pushNamed(PostBookDetailScreen.routeName, arguments: {
+      'book': book as Book,
     });
-    final userId = currentFirebaseUser!.uid;
-    await FirebaseFirestore.instance.collection('Publishedbooks').add({
-      'NameOfBook': nameOfBook,
-      'Auhor': Author,
-      'Publisher': Publisher,
-      'NumberOfpages': NumberOfPages,
-      'ConditionOfBook': ConditionOfBook,
-      'Price': Price,
-      'id': userId,
-    });
-    setState(() {
-      _isLoading = false;
-    });
-    Navigator.of(context).pushNamed(PostBookDetailScreen.routeName);
   }
 
   @override
@@ -107,21 +136,22 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
 
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Please provide a Name of book';
+                              return 'Required filed';
                             }
                             return null;
                           },
                           onSaved: (newValue) {
-                            nameOfBook = newValue!;
+                            book.NameOfBook = newValue!;
                           },
                         ),
+                        //  textFieldMethod('Name of Book', nameOfBook),
                         SizedBox(
                           height: 1.h,
                         ),
                         TextFormField(
                           // initialValue: _initValues['title'],
                           decoration: InputDecoration(
-                            labelText: 'Author',
+                            labelText: 'Auhtor',
                             border: new OutlineInputBorder(
                               borderRadius: const BorderRadius.all(
                                 const Radius.circular(10),
@@ -132,14 +162,15 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
 
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Please provide Author name';
+                              return 'Required filed';
                             }
                             return null;
                           },
                           onSaved: (newValue) {
-                            Author = newValue!;
+                            book.Author = newValue!;
                           },
                         ),
+
                         SizedBox(
                           height: 1.h,
                         ),
@@ -153,76 +184,80 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
                               ),
                             ),
                           ),
-
                           textInputAction: TextInputAction.next,
 
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Please provide Publisher Name';
+                              return 'Required filed';
                             }
                             return null;
                           },
                           onSaved: (newValue) {
-                            Publisher = newValue!;
+                            book.Publisher = newValue!;
                           },
                         ),
+                        // textFieldMethod('Publisher', Publisher),
                         SizedBox(
                           height: 1.h,
                         ),
-                        TextFormField(
-                          // initialValue: _initValues['title'],
-                          decoration: InputDecoration(
-                            labelText: 'What level is your book',
-                            border: new OutlineInputBorder(
+                        DropDownTextField(
+                          clearOption: true,
+                          textFieldDecoration: InputDecoration(
+                            hintText: 'What level is your book',
+                            border: OutlineInputBorder(
                               borderRadius: const BorderRadius.all(
                                 const Radius.circular(10),
                               ),
                             ),
                           ),
-
-                          textInputAction: TextInputAction.next,
-
                           validator: (value) {
-                            // if (value!.isEmpty) {
-                            //   return 'Please provide a level';
-                            // }
-                            return null;
+                            if (value == null) {
+                              return "Required field";
+                            } else {
+                              return null;
+                            }
                           },
-                          onSaved: (newValue) {
-                            // Publisher = newValue!;
+                          dropDownItemCount: levelDropDownList.length,
+                          dropDownList: levelDropDownList,
+                          onChanged: (val) {
+                            book.LevelofBook =
+                                (val as DropDownValueModel).name.toString();
                           },
                         ),
+                        // dropDownFieldMethod('What level is your book',
+                        // levelDropDownList, levelOfBook),
                         SizedBox(
                           height: 1.h,
                         ),
-                        TextFormField(
-                          // initialValue: _initValues['title'],
-                          decoration: InputDecoration(
-                            labelText: 'What subject is your book',
-                            border: new OutlineInputBorder(
+                        DropDownTextField(
+                          clearOption: true,
+                          textFieldDecoration: InputDecoration(
+                            hintText: 'What subject is your book',
+                            border: OutlineInputBorder(
                               borderRadius: const BorderRadius.all(
                                 const Radius.circular(10),
                               ),
                             ),
                           ),
-
-                          textInputAction: TextInputAction.next,
-
                           validator: (value) {
-                            // if (value!.isEmpty) {
-                            //   return 'Please provide a subject name';
-                            // }
-                            return null;
+                            if (value == null) {
+                              return "Required field";
+                            } else {
+                              return null;
+                            }
                           },
-                          onSaved: (newValue) {
-                            // Publisher = newValue!;
+                          dropDownItemCount: subjectDropDownList.length,
+                          dropDownList: subjectDropDownList,
+                          onChanged: (val) {
+                            book.SubjectofBook =
+                                (val as DropDownValueModel).name.toString();
                           },
                         ),
+
                         SizedBox(
                           height: 1.h,
                         ),
                         TextFormField(
-                          // initialValue: _initValues['title'],
                           decoration: InputDecoration(
                             labelText: 'Number of pages',
                             border: new OutlineInputBorder(
@@ -231,9 +266,7 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
                               ),
                             ),
                           ),
-
                           textInputAction: TextInputAction.next,
-
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please provide a value';
@@ -241,7 +274,7 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
                             return null;
                           },
                           onSaved: (newValue) {
-                            NumberOfPages = int.parse(newValue!);
+                            book.NumberOfPages = int.parse(newValue!);
                           },
                         ),
                         SizedBox(
@@ -254,54 +287,59 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
                         SizedBox(
                           height: 1.h,
                         ),
-                        TextFormField(
-                          // initialValue: _initValues['title'],
-                          decoration: InputDecoration(
-                            labelText: 'What is Condition of Your Book?',
-                            border: new OutlineInputBorder(
+                        DropDownTextField(
+                          clearOption: true,
+                          textFieldDecoration: InputDecoration(
+                            hintText: 'What is condition of your book',
+                            border: OutlineInputBorder(
                               borderRadius: const BorderRadius.all(
                                 const Radius.circular(10),
                               ),
                             ),
                           ),
-
-                          textInputAction: TextInputAction.next,
-
                           validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please provide Condition';
+                            if (value == null) {
+                              return "Required field";
+                            } else {
+                              return null;
                             }
-                            return null;
                           },
-                          onSaved: (newValue) {
-                            ConditionOfBook = newValue!;
-                            // NumberOfPages = newValue! as int;
+                          dropDownItemCount: conditionDropDownList.length,
+                          dropDownList: conditionDropDownList,
+                          onChanged: (val) {
+                            book.ConditionOfBook =
+                                (val as DropDownValueModel).name.toString();
                           },
                         ),
+
                         SizedBox(
                           height: 1.h,
                         ),
-                        TextFormField(
-                          // initialValue: _initValues['title'],
-                          decoration: InputDecoration(
-                            labelText: 'Is there any mark?',
-                            border: new OutlineInputBorder(
+                        DropDownTextField(
+                          clearOption: true,
+                          textFieldDecoration: InputDecoration(
+                            hintText: 'Is there any mark',
+                            border: OutlineInputBorder(
                               borderRadius: const BorderRadius.all(
                                 const Radius.circular(10),
                               ),
                             ),
                           ),
-
-                          textInputAction: TextInputAction.next,
-
                           validator: (value) {
-                            // if (value!.isEmpty) {
-                            //   return 'Please provide  a value';
-                            // }
-                            return null;
+                            if (value == null) {
+                              return "Required field";
+                            } else {
+                              return null;
+                            }
                           },
-                          onSaved: (newValue) {
-                            // NumberOfPages = newValue! as int;
+                          dropDownItemCount: markDropDownList.length,
+                          dropDownList: markDropDownList,
+                          onChanged: (val) {
+                            if (val == 'yes')
+                              book.isMark = true;
+                            else {
+                              book.isMark = false;
+                            }
                           },
                         ),
                         SizedBox(
@@ -314,8 +352,8 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
                         SizedBox(
                           height: 1.h,
                         ),
+
                         TextFormField(
-                          // initialValue: _initValues['title'],
                           decoration: InputDecoration(
                             labelText: 'Price',
                             border: new OutlineInputBorder(
@@ -324,9 +362,7 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
                               ),
                             ),
                           ),
-
                           textInputAction: TextInputAction.next,
-
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Please provide a value';
@@ -334,7 +370,7 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
                             return null;
                           },
                           onSaved: (newValue) {
-                            Price = int.parse(newValue!);
+                            book.price = double.parse(newValue!);
                           },
                         ),
                         SizedBox(
@@ -354,4 +390,56 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
       ),
     );
   }
+
+//   TextFormField textFieldMethod(String text, String bookvalue) {
+//     return TextFormField(
+//       // initialValue: _initValues['title'],
+//       decoration: InputDecoration(
+//         labelText: text,
+//         border: new OutlineInputBorder(
+//           borderRadius: const BorderRadius.all(
+//             const Radius.circular(10),
+//           ),
+//         ),
+//       ),
+//       textInputAction: TextInputAction.next,
+
+//       validator: (value) {
+//         if (value!.isEmpty) {
+//           return 'Required filed';
+//         }
+//         return null;
+//       },
+//       onSaved: (newValue) {
+//         bookvalue = newValue!;
+//       },
+//     );
+//   }
+
+//   DropDownTextField dropDownFieldMethod(
+//       String text, List<DropDownValueModel> list, String bookvalue) {
+//     return DropDownTextField(
+//       clearOption: true,
+//       textFieldDecoration: InputDecoration(
+//         hintText: text,
+//         border: OutlineInputBorder(
+//           borderRadius: const BorderRadius.all(
+//             const Radius.circular(10),
+//           ),
+//         ),
+//       ),
+//       validator: (value) {
+//         if (value == null) {
+//           return "Required field";
+//         } else {
+//           return null;
+//         }
+//       },
+//       dropDownItemCount: list.length,
+//       dropDownList: list,
+//       onChanged: (val) {
+//         bookvalue = val.toString();
+//       },
+//     );
+//   }
 }

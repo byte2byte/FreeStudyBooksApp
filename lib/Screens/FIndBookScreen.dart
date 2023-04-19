@@ -102,7 +102,7 @@ class _FindBookScreenState extends State<FindBookScreen> {
             width: 100.w,
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
-                    .collection('Publishedbooks')
+                    .collection('PublishedBooks')
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -122,17 +122,17 @@ class _FindBookScreenState extends State<FindBookScreen> {
                     itemBuilder: (ctx, index) => GestureDetector(
                       onTap: () => Navigator.of(context)
                           .pushNamed(BookDetailScreen.routeName, arguments: {
-                        'Author': documents[index]['Auhor'],
+                        'Author': documents[index]['Author'],
                         'Price': documents[index]['Price'],
                         'NameOfBook': documents[index]['NameOfBook'],
-                        'userId': documents[index]['id'],
+                        'userId': documents[index]['PublisherId'],
                         'Publisher': documents[index]['Publisher'],
                         'NumberOfPages': documents[index]['NumberOfpages'],
                       }),
                       child: BookItem(
                         url:
                             'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-                        author: documents[index]['Auhor'],
+                        author: documents[index]['Author'],
                         cost: documents[index]['Price'],
                         name: documents[index]['NameOfBook'],
                       ),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:free_study_books_app/Screens/Authentication/phoneVerificationScreen.dart';
 import 'package:free_study_books_app/Screens/FIndBookScreen.dart';
+import 'package:free_study_books_app/Screens/postYourBookScreen/PostBookPhtosScreen.dart.dart';
 
 import '../Utils/global.dart';
 
@@ -19,7 +20,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
       if (await fAuth.currentUser != null) {
         currentFirebaseUser = fAuth.currentUser;
         Navigator.push(
-            context, MaterialPageRoute(builder: (c) => FindBookScreen()));
+            context, MaterialPageRoute(builder: (c) => PostBookPhotosScreen()));
       } else {
         Navigator.push(context,
             MaterialPageRoute(builder: (c) => PhoneVerificationScreen()));

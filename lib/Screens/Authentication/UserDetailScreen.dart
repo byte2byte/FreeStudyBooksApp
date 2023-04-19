@@ -45,7 +45,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
       'phoneNumber': phoneNumber,
       'userId': currentFirebaseUser!.uid,
     });
-    Navigator.of(context).pushReplacementNamed(FindBookScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(PostBookPhotosScreen.routeName);
   }
 
   @override

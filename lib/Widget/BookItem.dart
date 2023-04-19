@@ -31,7 +31,7 @@ class BookItem extends StatelessWidget {
                         name,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 5.w,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                         textAlign: TextAlign.center,

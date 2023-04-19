@@ -27,30 +27,46 @@ class BookItem extends StatelessWidget {
                   leading: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        name,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                        softWrap: true,
-                        overflow: TextOverflow.fade,
-                      ),
-                      Text(
-                        author,
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 3.w,
+                      Container(
+                        height: 2.3.h,
+                        width: 35.w,
+                        child: Text(
+                          name,
+                          style: TextStyle(
+                            // overflow: TextOverflow.ellipsis,
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          // textAlign: TextAlign.center,
+                          // softWrap: true,\
+                          // overflow: TextOverflow.fade,
                         ),
                       ),
-                      Text(
-                        '\$${cost}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 4.w,
-                          fontWeight: FontWeight.w600,
+                      Container(
+                        height: 1.5.h,
+                        width: 35.w,
+                        child: Text(
+                          author,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 0.1.h,
+                      ),
+                      Container(
+                        height: 2.h,
+                        width: 35.w,
+                        child: Text(
+                          '\$${cost}',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ],

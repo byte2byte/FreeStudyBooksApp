@@ -17,19 +17,22 @@ class _FindBookScreenState extends State<FindBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Search a book'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              icon: Icon(Icons.logout))
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text('Search a book'),
+      //   actions: [
+      //     IconButton(
+      //         onPressed: () {
+      //           FirebaseAuth.instance.signOut();
+      //         },
+      //         icon: Icon(Icons.logout))
+      //   ],
+      // ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 5.h,
+          ),
           Text(
             '  Find Your Textbook',
             style: TextStyle(
@@ -38,7 +41,7 @@ class _FindBookScreenState extends State<FindBookScreen> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 2.h,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -98,7 +101,7 @@ class _FindBookScreenState extends State<FindBookScreen> {
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            height: 74.7.h,
+            height: 72.5.h,
             width: 100.w,
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
@@ -125,13 +128,13 @@ class _FindBookScreenState extends State<FindBookScreen> {
                         'Author': documents[index]['Author'],
                         'Price': documents[index]['Price'],
                         'NameOfBook': documents[index]['NameOfBook'],
-                        'userId': documents[index]['PublisherId'],
+                        'userId': documents[index]['PublisherID'],
                         'Publisher': documents[index]['Publisher'],
-                        'NumberOfPages': documents[index]['NumberOfpages'],
+                        'NumberOfPages': documents[index]['NumberOfPages'],
+                        'Images': documents[index]['Images'],
                       }),
                       child: BookItem(
-                        url:
-                            'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+                        url: documents[index]['Images'][0],
                         author: documents[index]['Author'],
                         cost: documents[index]['Price'],
                         name: documents[index]['NameOfBook'],

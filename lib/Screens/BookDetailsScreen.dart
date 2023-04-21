@@ -20,7 +20,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   var userId = '';
   double Price = 1.0;
   bool check = false;
-  var imgList;
+  List<String> imgList = [];
   @override
   void didChangeDependencies() {
     if (check == false) {
@@ -33,7 +33,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
         NameOfBook = routeArgs['NameOfBook'] as String;
         userId = routeArgs['userId'] as String;
         Price = routeArgs['Price'];
-        imgList = routeArgs['Images'] as List<String>;
+        imgList = routeArgs['Images'];
       }
 
       check = true;
@@ -67,7 +67,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                       options: CarouselOptions(),
                       items: imgList
                           .map(
-                            (item) => Image.network(item,
+                            (item) => Image.network(item.toString(),
                                 fit: BoxFit.fill, width: 1000),
                           )
                           .toList(),

@@ -5,8 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:free_study_books_app/Utils/global.dart';
 
 class NewMessages extends StatefulWidget {
-  String userId;
-  NewMessages(this.userId);
+  String recieverId;
+  String recieverName;
+  NewMessages(this.recieverId, this.recieverName);
 
   @override
   State<NewMessages> createState() => _NewMessagesState();
@@ -18,25 +19,65 @@ class _NewMessagesState extends State<NewMessages> {
 
   void _SendMessage() async {
     FocusScope.of(context).unfocus();
-    final user = await FirebaseAuth.instance.currentUser;
-    var personalChatId = widget.userId + currentFirebaseUser!.uid;
+
+    var personalChatId = widget.recieverId + currentFirebaseUser!.uid;
     // print(widget.userId);
-    print(personalChatId);
+    // print(personalChatId);
     final userData = await FirebaseFirestore.instance
         .collection('Users')
-        .doc(user!.uid)
+        .doc(currentFirebaseUser!.uid)
         .get();
-    FirebaseFirestore.instance
-        .collection('chat')
-        .doc('${widget.userId}${user.uid}')
-        .collection('PersonalChat')
+    // FirebaseFirestore.instance
+    //     .collection('chat')
+    //     .doc('${widget.userId}${currentFirebaseUser!.uid}')
+    //     .collection('PersonalChat')
+    //     .add({
+    //   'text': _enteredMessage,
+    //   'createdAt': Timestamp.now(),
+    //   'userId': currentFirebaseUser!.uid,
+    //   'userName': userData['userFirstName'] + ' ' + userData['userLastName'],
+    // });
+    await FirebaseFirestore.instance
+        .collection("chat")
+        .doc(currentFirebaseUser!.uid)
+        .collection(widget.recieverId)
         .add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
-      'userId': user.uid,
+      'userId': currentFirebaseUser!.uid,
       'userName': userData['userFirstName'] + ' ' + userData['userLastName'],
-      // 'userImage': userData['image_url'],
     });
+    await FirebaseFirestore.instance
+        .collection("chat")
+        .doc(widget.recieverId)
+        .collection(currentFirebaseUser!.uid)
+        .add({
+      'text': _enteredMessage,
+      'createdAt': Timestamp.now(),
+      'userId': currentFirebaseUser!.uid,
+      'userName': userData['userFirstName'] + ' ' + userData['userLastName'],
+    });
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(currentFirebaseUser!.uid)
+        .collection('recentChat')
+        .doc(widget.recieverId)
+        .set({
+      'ID': widget.recieverId,
+      'Name': widget.recieverName,
+      'lastText': _enteredMessage,
+    });
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(widget.recieverId)
+        .collection('recentChat')
+        .doc(currentFirebaseUser!.uid)
+        .set({
+      'ID': currentFirebaseUser!.uid,
+      'Name': userData['userFirstName'] + ' ' + userData['userLastName'],
+      'lastText': _enteredMessage,
+    });
+
     _controller.clear();
   }
 

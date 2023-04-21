@@ -9,8 +9,8 @@ import 'package:free_study_books_app/Widget/MessageBubble.dart';
 import '../Utils/global.dart';
 
 class Messages extends StatelessWidget {
-  String userId;
-  Messages(this.userId);
+  String recieverId;
+  Messages(this.recieverId);
 
   Future<bool> _getUser(id) async {
     final user = await FirebaseAuth.instance.currentUser;
@@ -22,12 +22,9 @@ class Messages extends StatelessWidget {
     return StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('chat')
-            .doc('${userId}${currentFirebaseUser!.uid}')
-            .collection('PersonalChat')
-            .orderBy(
-              'createdAt',
-              descending: true,
-            )
+            .doc(currentFirebaseUser!.uid)
+            .collection(recieverId)
+            .orderBy('createdAt', descending: true)
             .snapshots(),
         builder: ((context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

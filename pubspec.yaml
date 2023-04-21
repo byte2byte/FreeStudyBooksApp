@@ -45,6 +45,7 @@ dependencies:
   chat_bubbles: ^1.4.0
   image_picker: ^0.8.7+3
   dropdown_textfield: ^1.0.8
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

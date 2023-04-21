@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:free_study_books_app/Screens/ChatScreen/MyMessagesScreen.dart';
 import 'package:free_study_books_app/Screens/ChatScreen/chatScreen.dart';
 import 'package:free_study_books_app/Screens/FIndBookScreen.dart';
 import 'package:free_study_books_app/Screens/postYourBookScreen/PostBookPhtosScreen.dart.dart';
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           FindBookScreen(),
           PostBookPhotosScreen(),
-          ChatScreen(),
+          MyMessagesScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

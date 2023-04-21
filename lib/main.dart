@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:free_study_books_app/Screens/ChatScreen/MyMessagesScreen.dart';
 import 'package:free_study_books_app/Screens/homeScreen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
           PostBookInfoScreen.routeName: (context) => PostBookInfoScreen(),
           PostBookDetailScreen.routeName: (context) => PostBookDetailScreen(),
           HomeScreen.routeName: (context) => HomeScreen(),
+          MyMessagesScreen.routeName: (context) => MyMessagesScreen(),
         },
       );
     });

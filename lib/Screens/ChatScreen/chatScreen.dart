@@ -20,10 +20,10 @@ class _ChatScreenState extends State<ChatScreen> {
     // TODO: implement didChangeDependencies
     if (check == false) {
       final routeArgs =
-          ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+          ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
       if (routeArgs != null) {
-        userId = routeArgs['userId']!;
-        Publisher = routeArgs['Publisher']!;
+        userId = routeArgs['userId']!.toString();
+        Publisher = routeArgs['Publisher']!.toString();
       }
       check = true;
     }
@@ -45,7 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Expanded(
               child: Messages(userId),
             ),
-            NewMessages(userId),
+            NewMessages(userId, Publisher),
           ],
         ),
       ),

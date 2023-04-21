@@ -1,7 +1,10 @@
 import 'dart:async';
+// import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:free_study_books_app/Screens/Authentication/phoneVerificationScreen.dart';
+import 'package:free_study_books_app/Screens/ChatScreen/chatScreen.dart';
 import 'package:free_study_books_app/Screens/FIndBookScreen.dart';
 import 'package:free_study_books_app/Screens/homeScreen.dart';
 import 'package:free_study_books_app/Screens/postYourBookScreen/PostBookPhtosScreen.dart.dart';
@@ -9,7 +12,7 @@ import 'package:free_study_books_app/Screens/postYourBookScreen/PostBookPhtosScr
 import '../Utils/global.dart';
 
 class MySplashScreen extends StatefulWidget {
-  const MySplashScreen({Key? key}) : super(key: key);
+  List<String> chatUsers = [];
 
   @override
   _MySplashScreenState createState() => _MySplashScreenState();
@@ -20,6 +23,15 @@ class _MySplashScreenState extends State<MySplashScreen> {
     Timer(const Duration(seconds: 3), () async {
       if (await fAuth.currentUser != null) {
         currentFirebaseUser = fAuth.currentUser;
+        final data1 = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(currentFirebaseUser!.uid)
+            .collection('recentChat')
+            .get();
+        data1.docs.forEach((element) {
+          widget.chatUsers.add(element.id);
+          // print(element.id);
+        });
         Navigator.push(
             context, MaterialPageRoute(builder: (c) => HomeScreen()));
       } else {

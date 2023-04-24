@@ -35,6 +35,7 @@ class _PostBookDetailScreenState extends State<PostBookDetailScreen> {
       'PublisherID': currentFirebaseUser!.uid,
       'BookId': book.id,
       'Images': book.imageUrl,
+      'details': book.description,
     });
     Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
   }

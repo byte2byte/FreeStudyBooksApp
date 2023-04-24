@@ -18,6 +18,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
   int NumberOfPages = 1;
   var NameOfBook = '';
   var userId = '';
+  var BookDetails = '';
   double Price = 1.0;
   bool check = false;
   List<String> imgList = [];
@@ -34,6 +35,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
         userId = routeArgs['userId'] as String;
         Price = routeArgs['Price'];
         imgList = routeArgs['Images'];
+        BookDetails = routeArgs['BookDetails'];
       }
 
       check = true;
@@ -171,7 +173,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Are there any notes'),
-                            Text('Yes'),
+                            Text('No'),
                           ],
                         ),
                         SizedBox(
@@ -187,8 +189,7 @@ class _BookDetailScreenState extends State<BookDetailScreen> {
                       ],
                     ),
                     Container(
-                      child: Text(
-                          'physics, science that deals with the structure of matter and the interactions between the fundamental constituents of the observable universe. In the broadest sense, physics (from the Greek physikos) is concerned with all aspects of nature on both the macroscopic and submicroscopic levels. Its scope of study encompasses not only the behaviour of objects under the action of given forces but also the nature and origin of gravitational, electromagnetic, and nuclear force fields. Its ultimate objective is the formulation of a few comprehensive principles that bring together and explain all such disparate phenomena.'),
+                      child: Text(BookDetails),
                     ),
                     Container(
                       child: ListTile(

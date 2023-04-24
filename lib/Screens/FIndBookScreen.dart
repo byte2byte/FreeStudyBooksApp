@@ -129,6 +129,7 @@ class _FindBookScreenState extends State<FindBookScreen> {
                           'userId': documents[index]['PublisherID'],
                           'Publisher': documents[index]['Publisher'],
                           'NumberOfPages': documents[index]['NumberOfPages'],
+                          'BookDetails': documents[index]['details'],
                           'Images': (documents[index]['Images'] as List)
                               .map((item) => item as String)
                               .toList(),

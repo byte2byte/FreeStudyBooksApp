@@ -4,6 +4,8 @@ import 'package:free_study_books_app/Screens/ChatScreen/chatScreen.dart';
 import 'package:free_study_books_app/Screens/FIndBookScreen.dart';
 import 'package:free_study_books_app/Screens/postYourBookScreen/PostBookPhtosScreen.dart.dart';
 
+import 'ProfileSreen.dart';
+
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home-screen';
   @override
@@ -26,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
 
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -39,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen>
           FindBookScreen(),
           PostBookPhotosScreen(),
           MyMessagesScreen(),
+          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -54,6 +57,10 @@ class _HomeScreenState extends State<HomeScreen>
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             label: "chat",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         unselectedItemColor: Colors.black,

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:free_study_books_app/Screens/FIndBookScreen.dart';
+import 'package:free_study_books_app/Screens/homeScreen.dart';
 import 'package:free_study_books_app/Utils/BlueBtn.dart';
 import 'package:free_study_books_app/Utils/global.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -35,7 +36,7 @@ class _PostBookDetailScreenState extends State<PostBookDetailScreen> {
       'BookId': book.id,
       'Images': book.imageUrl,
     });
-    Navigator.of(context).pushNamed(FindBookScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
   }
 
   @override
@@ -52,6 +53,7 @@ class _PostBookDetailScreenState extends State<PostBookDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text('Add description')),
       body: Container(
           padding: EdgeInsets.all(8),

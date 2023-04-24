@@ -42,6 +42,8 @@ class MyApp extends StatelessWidget {
           PostBookDetailScreen.routeName: (context) => PostBookDetailScreen(),
           HomeScreen.routeName: (context) => HomeScreen(),
           MyMessagesScreen.routeName: (context) => MyMessagesScreen(),
+          PhoneVerificationScreen.routeName: (context) =>
+              PhoneVerificationScreen(),
         },
       );
     });

@@ -20,60 +20,44 @@ class PostBookPhotosScreen extends StatefulWidget {
 }
 
 class _PostBookPhotosScreenState extends State<PostBookPhotosScreen> {
+  var coverURL = '';
+  var titleURL = '';
+  var pageURL1 = '';
+  var pageURL2 = '';
+
   var _isLoading = false;
-  List<XFile> imagesList = [];
+
   var book = Book();
 
-  Future<List<String>?> uploadImages(List<XFile> images) async {
-    if (images.length < 1) return null;
+  Future<String> uploadImagesFunction(image) async {
+    Reference ref = FirebaseStorage.instance
+        .ref()
+        .child('published-books')
+        .child(currentFirebaseUser!.uid + image.name + 'jpg');
 
-    List<String> _downloadUrls = [];
+    await ref.putFile(File.File(image.path)).whenComplete(() => null);
 
-    await Future.forEach(images, (image) async {
-      Reference ref = FirebaseStorage.instance
-          .ref()
-          .child('published-books')
-          .child(currentFirebaseUser!.uid + image.name + 'jpg');
+    final url = await ref.getDownloadURL();
 
-      await ref.putFile(File.File(image.path)).whenComplete(() => null);
-
-      final url = await ref.getDownloadURL();
-      _downloadUrls.add(url);
-    });
-    print('uploaded to storage');
-    return _downloadUrls;
+    return url;
   }
 
-  void submitPhotos(
-    BuildContext ctx,
-    List<XFile> images,
-  ) async {
-    setState(() {
-      _isLoading = true;
-    });
-    List<String>? urls = await uploadImages(images);
-    book.imageUrl = urls!;
-    // await FirebaseFirestore.instance.collection('PublishedBooks').add({
-    //   'image_urls': urls,
-    // });
-    setState(() {
-      _isLoading = false;
-    });
-    print('uuploaded url');
-  }
-
-  void _pickImage() async {
+  Future<String> _pickImage(String url) async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(
       source: ImageSource.camera,
       imageQuality: 50,
       maxWidth: 150,
     );
+    final downlodedUrl = await uploadImagesFunction(pickedImage);
+    setState(() {
+      url = downlodedUrl;
+    });
 
-    imagesList.add(pickedImage!);
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Image added')));
     print('images addded to list');
+    return downlodedUrl;
   }
 
   @override
@@ -105,11 +89,124 @@ class _PostBookPhotosScreenState extends State<PostBookPhotosScreen> {
               children: [
                 Row(
                   children: [
-                    UploadPhoto('Book cover Photo'),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          final getUrl = await _pickImage(coverURL);
+                          setState(() {
+                            coverURL = getUrl;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 1.0.w, vertical: 1.0.h),
+                          height: 22.0.h,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 2),
+                              borderRadius: BorderRadius.circular(3.0.w)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Book cover photo',
+                                style: Kstyles.subHeadingStyle
+                                    .copyWith(fontSize: 17.0.sp),
+                              ),
+                              SizedBox(
+                                height: 1.0.h,
+                              ),
+                              coverURL != ''
+                                  ? Expanded(
+                                      child: Container(
+                                        height: 15.5.h,
+                                        width: 40.w,
+                                        child: Image.network(
+                                          coverURL,
+                                          fit: BoxFit.fill,
+                                          width: 1000,
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.lightBlue,
+                                            borderRadius:
+                                                BorderRadius.circular(2.0.w)),
+                                        child: Center(
+                                            child: Icon(
+                                          size: 20.w,
+                                          Icons.photo_camera_sharp,
+                                          color: Colors.yellow,
+                                        )),
+                                      ),
+                                    )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    // UploadPhotoWidget('Book cover photo', coverURL),
                     SizedBox(
                       width: 5.0.w,
                     ),
-                    UploadPhoto('Book title Photo'),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          final getUrl = await _pickImage(titleURL);
+                          setState(() {
+                            titleURL = getUrl;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 1.0.w, vertical: 1.0.h),
+                          height: 22.0.h,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 2),
+                              borderRadius: BorderRadius.circular(3.0.w)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Book title photo',
+                                style: Kstyles.subHeadingStyle
+                                    .copyWith(fontSize: 17.0.sp),
+                              ),
+                              SizedBox(
+                                height: 1.0.h,
+                              ),
+                              titleURL != ''
+                                  ? Expanded(
+                                      child: Container(
+                                        height: 15.5.h,
+                                        width: 40.w,
+                                        child: Image.network(
+                                          titleURL,
+                                          fit: BoxFit.fill,
+                                          width: 1000,
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.lightBlue,
+                                            borderRadius:
+                                                BorderRadius.circular(2.0.w)),
+                                        child: Center(
+                                            child: Icon(
+                                          size: 20.w,
+                                          Icons.photo_camera_sharp,
+                                          color: Colors.yellow,
+                                        )),
+                                      ),
+                                    )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -117,17 +214,129 @@ class _PostBookPhotosScreenState extends State<PostBookPhotosScreen> {
                 ),
                 Row(
                   children: [
-                    UploadPhoto('Book pages Photo 1'),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          final getUrl = await _pickImage(pageURL1);
+                          setState(() {
+                            pageURL1 = getUrl;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 1.0.w, vertical: 1.0.h),
+                          height: 22.0.h,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 2),
+                              borderRadius: BorderRadius.circular(3.0.w)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Book pages Photo 1',
+                                style: Kstyles.subHeadingStyle
+                                    .copyWith(fontSize: 17.0.sp),
+                              ),
+                              SizedBox(
+                                height: 1.0.h,
+                              ),
+                              pageURL1 != ''
+                                  ? Expanded(
+                                      child: Container(
+                                        height: 15.5.h,
+                                        width: 40.w,
+                                        child: Image.network(
+                                          pageURL1,
+                                          fit: BoxFit.fill,
+                                          width: 1000,
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.lightBlue,
+                                            borderRadius:
+                                                BorderRadius.circular(2.0.w)),
+                                        child: Center(
+                                            child: Icon(
+                                          size: 20.w,
+                                          Icons.photo_camera_sharp,
+                                          color: Colors.yellow,
+                                        )),
+                                      ),
+                                    )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       width: 5.0.w,
                     ),
-                    UploadPhoto('Book pages Photo 2'),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () async {
+                          final getUrl = await _pickImage(pageURL2);
+                          setState(() {
+                            pageURL2 = getUrl;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 1.0.w, vertical: 1.0.h),
+                          height: 22.0.h,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 2),
+                              borderRadius: BorderRadius.circular(3.0.w)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Book pages Photo 2',
+                                style: Kstyles.subHeadingStyle
+                                    .copyWith(fontSize: 17.0.sp),
+                              ),
+                              SizedBox(
+                                height: 1.0.h,
+                              ),
+                              pageURL2 != ''
+                                  ? Expanded(
+                                      child: Container(
+                                        height: 15.5.h,
+                                        width: 40.w,
+                                        child: Image.network(
+                                          pageURL2,
+                                          fit: BoxFit.fill,
+                                          width: 1000,
+                                        ),
+                                      ),
+                                    )
+                                  : Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.lightBlue,
+                                            borderRadius:
+                                                BorderRadius.circular(2.0.w)),
+                                        child: Center(
+                                            child: Icon(
+                                          size: 20.w,
+                                          Icons.photo_camera_sharp,
+                                          color: Colors.yellow,
+                                        )),
+                                      ),
+                                    )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 )
               ],
             ),
-            SizedBox(
-              height: 10.0.h,
+            Expanded(
+              child: SizedBox(),
             ),
             _isLoading == true
                 ? Container(
@@ -136,53 +345,28 @@ class _PostBookPhotosScreenState extends State<PostBookPhotosScreen> {
                 : BlueBtn(
                     label: "Next",
                     ontap: () {
-                      submitPhotos(context, imagesList);
-                      Navigator.of(context)
-                          .pushNamed(PostBookInfoScreen.routeName, arguments: {
-                        'book': book,
-                      });
-                    })
+                      if (coverURL != '' &&
+                          titleURL != '' &&
+                          pageURL1 != '' &&
+                          pageURL2 != '') {
+                        book.imageUrl = [
+                          coverURL,
+                          titleURL,
+                          pageURL1,
+                          pageURL2
+                        ];
+                        Navigator.of(context).pushNamed(
+                            PostBookInfoScreen.routeName,
+                            arguments: {
+                              'book': book,
+                            });
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Please upload all images')));
+                      }
+                    },
+                  )
           ],
-        ),
-      ),
-    );
-  }
-
-  Expanded UploadPhoto(String text) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: _pickImage,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 1.0.w, vertical: 1.0.h),
-          height: 22.0.h,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black, width: 2),
-              borderRadius: BorderRadius.circular(3.0.w)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                text,
-                style: Kstyles.subHeadingStyle.copyWith(fontSize: 17.0.sp),
-              ),
-              SizedBox(
-                height: 1.0.h,
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.lightBlue,
-                      borderRadius: BorderRadius.circular(2.0.w)),
-                  child: Center(
-                      child: Icon(
-                    size: 20.w,
-                    Icons.photo_camera_sharp,
-                    color: Colors.yellow,
-                  )),
-                ),
-              )
-            ],
-          ),
         ),
       ),
     );

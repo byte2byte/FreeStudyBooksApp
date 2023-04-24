@@ -17,17 +17,18 @@ class _FindBookScreenState extends State<FindBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             height: 5.h,
           ),
-          IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              icon: Icon(Icons.logout)),
+          //IconButton(
+          //     onPressed: () {
+          //       FirebaseAuth.instance.signOut();
+          //     },
+          //     icon: Icon(Icons.logout)),
           Text(
             '  Find Your Textbook',
             style: TextStyle(

@@ -9,54 +9,57 @@ class MyMessagesItem extends StatelessWidget {
   final String text;
   // final DateTime date;
   final String id;
+  final DateTime date;
 
-  MyMessagesItem(this.name, this.text, this.id);
+  MyMessagesItem(this.name, this.text, this.date, this.id);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-          border: Border.all(width: 2),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: ListTile(
-          leading: Container(
-            decoration: BoxDecoration(
-              border: Border.all(width: 1),
-              borderRadius: BorderRadius.all(
-                Radius.circular(2),
-              ),
-            ),
-            height: 5.h,
-            width: 5.h,
-            child: Image.network(
-                fit: BoxFit.cover,
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg'),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 0.3.h),
+      child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 2),
+            borderRadius: BorderRadius.circular(5),
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 30.w,
-                child: Text(
-                  '${name}',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+          child: ListTile(
+            leading: Container(
+              decoration: BoxDecoration(
+                border: Border.all(width: 1),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(2),
                 ),
               ),
-              Text(
-                // DateFormat.yMEd().format(date),
-                '02/02/2034',
-                style: TextStyle(color: Colors.grey),
-              ),
-            ],
-          ),
-          subtitle: Text(
-            text,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-          // trailing: Text('2/2/2023'),
-        ));
+              height: 5.h,
+              width: 5.h,
+              child: Image.network(
+                  fit: BoxFit.cover,
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg'),
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 30.w,
+                  child: Text(
+                    '${name}',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Text(
+                  DateFormat.yMEd().format(date),
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
+            subtitle: Text(
+              text,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+            // trailing: Text('2/2/2023'),
+          )),
+    );
   }
 }

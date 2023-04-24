@@ -5,6 +5,7 @@ import 'package:free_study_books_app/Screens/Authentication/OtpScreen.dart';
 import '../../Utils/BlueBtn.dart';
 
 class PhoneVerificationScreen extends StatefulWidget {
+  static const routeName = 'phone-varifiaction-screen';
   @override
   State<PhoneVerificationScreen> createState() =>
       _PhoneVerificationScreenState();
@@ -59,6 +60,7 @@ class _PhoneVerificationScreenState extends State<PhoneVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.all(10),

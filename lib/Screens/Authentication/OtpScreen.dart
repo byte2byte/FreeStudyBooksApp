@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:free_study_books_app/Screens/Authentication/UserDetailScreen.dart';
 import 'package:free_study_books_app/Screens/BookDetailsScreen.dart';
+import 'package:free_study_books_app/Screens/homeScreen.dart';
+import 'package:free_study_books_app/Utils/global.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,19 +40,29 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   Future<void> signIn(String otp) async {
-    await FirebaseAuth.instance
+    final userData = await FirebaseAuth.instance
         .signInWithCredential(PhoneAuthProvider.credential(
       verificationId: verificationId,
       smsCode: otp,
     ));
-    Navigator.of(context).pushNamed(UserDetailScreen.routeName, arguments: {
-      'phoneNumber': phoneNumber,
-    });
+    final userID = userData.user!.uid;
+
+    final snapShot =
+        await FirebaseFirestore.instance.collection('Users').doc(userID).get();
+
+    if (snapShot == null || !snapShot.exists) {
+      Navigator.of(context).pushNamed(UserDetailScreen.routeName, arguments: {
+        'phoneNumber': phoneNumber,
+      });
+    } else {
+      Navigator.of(context).pushNamed(HomeScreen.routeName);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: (Container(
         padding: EdgeInsets.all(10),

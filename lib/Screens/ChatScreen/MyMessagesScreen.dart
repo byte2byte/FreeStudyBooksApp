@@ -92,7 +92,7 @@ class _MyMessagesScreenState extends State<MyMessagesScreen> {
                     }
 
                     final documents = snapshot.data!.docs;
-                    print('ok');
+
                     return ListView.builder(
                       itemCount: documents.length,
                       itemBuilder: (context, index) =>
@@ -108,7 +108,7 @@ class _MyMessagesScreenState extends State<MyMessagesScreen> {
                         child: MyMessagesItem(
                           documents[index]['Name'],
                           documents[index]['lastText'],
-                          // documents[index]['createdAt'].toDate(),
+                          documents[index]['createdAt'].toDate(),
                           // documents[index]['Publisher'] as String,
                           // documents[index]['text'] as String,
                           documents[index].id,
@@ -123,55 +123,4 @@ class _MyMessagesScreenState extends State<MyMessagesScreen> {
     );
   }
 }
-  // Container(
-  //               height: 65.5.h,
-  //               width: 100.w,
-  //               child: StreamBuilder(
-  //                 stream: FirebaseFirestore.instance
-  //                     .collection('chat')
-  //                     .doc(currentFirebaseUser!.uid).collection('')
-  //                     .get()
-  //                     .asStream(),
-  //                 // .get(),/\
-  //                 // .asStream(),
-  //                 // .collection('dCm7SQGC8cVtTkfg8A7Q7McG2fQ2')
-  //                 // .orderBy('createdAt', descending: true)
-  //                 // .snapshots(),
-  //                 // FirebaseFirestore.instance
-  //                 //     .collection('chat')
-  //                 //     .doc(
-  //                 //         'O11qnoK8GaQEBtvdQKQ20RxIUB629CiSKIQHQvRNxRsP4yiEZ6sMZKi1')
-  //                 //     .collection('PersonalChat')
-  //                 //     .snapshots(),
-
-  //                 builder: (context, snapshot) {
-  //                   // print(currentFirebaseUser!.uid);
-  //                   // print(snapshot.data?.data().toString());
-  //                   print('id:${snapshot.data?.reference}');
-  //                   if (snapshot.connectionState == ConnectionState.waiting) {
-  //                     return Center(
-  //                       child: CircularProgressIndicator(),
-  //                     );
-  //                   }
-  //                   return ListView.builder(
-  //                     itemCount: snapshot.data?.data()?.length,
-  //                     itemBuilder: (context, index) {
-  //                       print(snapshot.data?.data()?.length);
-  //                       return Text(
-  //                         snapshot.data?.data()?.keys.elementAt(index) ?? 'ok',
-  //                       );
-  //                     },
-  //                   );
-  //                   // final documents = snapshot.data!.docs;
-  //                   // print('ok');
-  //                   // return ListView.builder(
-  //                   //   itemCount: documents.length,
-  //                   //   itemBuilder: (context, index) => MyMessagesItem(
-  //                   //     documents[index]['createdAt'].toDate(),
-  //                   //     documents[index]['userName'] as String,
-  //                   //     documents[index]['text'] as String,
-  //                   //     documents[index]['userId'] as String,
-  //                   //   ),
-  //                   // );
-  //                 },
-  //               )),
+//done

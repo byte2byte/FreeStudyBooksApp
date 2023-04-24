@@ -5,7 +5,8 @@ import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:free_study_books_app/Widget/MessageBubble.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+
 import '../Utils/global.dart';
 
 class Messages extends StatelessWidget {

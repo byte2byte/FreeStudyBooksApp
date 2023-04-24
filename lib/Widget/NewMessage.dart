@@ -21,22 +21,12 @@ class _NewMessagesState extends State<NewMessages> {
     FocusScope.of(context).unfocus();
 
     var personalChatId = widget.recieverId + currentFirebaseUser!.uid;
-    // print(widget.userId);
-    // print(personalChatId);
+
     final userData = await FirebaseFirestore.instance
         .collection('Users')
         .doc(currentFirebaseUser!.uid)
         .get();
-    // FirebaseFirestore.instance
-    //     .collection('chat')
-    //     .doc('${widget.userId}${currentFirebaseUser!.uid}')
-    //     .collection('PersonalChat')
-    //     .add({
-    //   'text': _enteredMessage,
-    //   'createdAt': Timestamp.now(),
-    //   'userId': currentFirebaseUser!.uid,
-    //   'userName': userData['userFirstName'] + ' ' + userData['userLastName'],
-    // });
+
     await FirebaseFirestore.instance
         .collection("chat")
         .doc(currentFirebaseUser!.uid)
@@ -57,6 +47,7 @@ class _NewMessagesState extends State<NewMessages> {
       'userId': currentFirebaseUser!.uid,
       'userName': userData['userFirstName'] + ' ' + userData['userLastName'],
     });
+    _controller.clear();
     await FirebaseFirestore.instance
         .collection('Users')
         .doc(currentFirebaseUser!.uid)
@@ -66,6 +57,7 @@ class _NewMessagesState extends State<NewMessages> {
       'ID': widget.recieverId,
       'Name': widget.recieverName,
       'lastText': _enteredMessage,
+      // 'createdeAt':DateTime.now(),
     });
     await FirebaseFirestore.instance
         .collection('Users')
@@ -76,9 +68,8 @@ class _NewMessagesState extends State<NewMessages> {
       'ID': currentFirebaseUser!.uid,
       'Name': userData['userFirstName'] + ' ' + userData['userLastName'],
       'lastText': _enteredMessage,
+      'createdAt': DateTime.now(),
     });
-
-    _controller.clear();
   }
 
   @override

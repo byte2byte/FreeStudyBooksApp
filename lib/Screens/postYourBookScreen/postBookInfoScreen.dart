@@ -83,15 +83,8 @@ class _PostBookInfoScreenState extends State<PostBookInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              icon: Icon(Icons.logout))
-        ],
-      ),
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(),
       body: Container(
         padding: EdgeInsets.all(8),
         child: Column(
